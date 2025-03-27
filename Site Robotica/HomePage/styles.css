@@ -1,0 +1,188 @@
+/* Global & Scroll Snap Settings */
+html, body {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  font-family: Arial, sans-serif;
+  background: #000;
+  height: 100%;
+  overflow-y: scroll;
+  cursor: crosshair;
+}
+
+/* Background Flame Flicker */
+.flame-bg {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: url('https://i.imgur.com/Enx0sTt.png') center center / cover no-repeat;
+  opacity: 0.15;
+  z-index: -2;
+  animation: subtleFlicker 3s infinite alternate;
+}
+@keyframes subtleFlicker {
+  0%   { opacity: 0.15; }
+  50%  { opacity: 0.25; }
+  100% { opacity: 0.15; }
+}
+
+/* Fixed Navigation */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: transparent;
+  padding: 0.5rem;
+  text-align: center;
+  z-index: 10;
+}
+nav a {
+  margin: 0 1rem;
+  color: #ff6600;
+  text-decoration: none;
+  font-weight: bold;
+}
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Full-screen Sections */
+.section {
+  height: 100vh;
+  scroll-snap-align: start;
+  box-sizing: border-box;
+  position: relative;
+  padding-top: 60px; /* Leaves space for nav */
+}
+
+/* Title Page */
+#title-page {
+  background: none;
+  position: relative;
+  color: #ff6600;
+}
+
+/* Title Text positioned near center-left */
+#title-page .title-content {
+  position: absolute;
+  top: 50%;
+  left: 15%;
+  transform: translate(0, -50%);
+  text-align: left;
+}
+#title-page h1 {
+  font-size: 4rem;
+  margin: 0;
+}
+#title-page p {
+  font-size: 1.5rem;
+  margin: 0.5rem 0 0;
+}
+
+/* Title Page Images with updated dimensions */
+/* Bottom Left Image */
+#title-page .bottom-left {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 900px;
+  height: auto;
+}
+
+/* Bottom Right Image */
+#title-page .bottom-right {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 900px;
+  height: auto;
+}
+
+/* Center Right Logo */
+#title-page .center-right {
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  transform: translateY(-50%);
+  width: 700px;
+  height: auto;
+}
+
+/* Category Sections */
+.category {
+  background: #111;
+  color: #ff6600;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+}
+.align-left {
+  text-align: left;
+  align-items: flex-start;
+}
+.align-right {
+  text-align: right;
+  align-items: flex-end;
+}
+
+/* Hidden Button for Categories */
+.hidden-button {
+  background: transparent;
+  border: 2px solid #ff6600;
+  color: #ff6600;
+  padding: 20px 40px;
+  font-size: 2.5rem;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  /* Initially hidden */
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+/* Show button when hovering over the category section */
+.section.category:hover .hidden-button {
+  opacity: 1;
+}
+/* Styling for the description text inside the button */
+.hidden-button .btn-desc {
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+/* Fixed Footer */
+footer {
+  background: transparent;
+  color: #ff6600;
+  text-align: center;
+  padding: 1rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  font-size: 0.9rem;
+}
+
+/* Flame Cursor Trail */
+.cursor-flame {
+  position: absolute;
+  pointer-events: none;
+  transform-origin: center center;
+  z-index: 0;
+  animation: fadeOut 0.5s forwards ease-out;
+}
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+}

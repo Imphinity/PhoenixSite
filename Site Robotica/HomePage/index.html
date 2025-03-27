@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PHOENIX FTC Team</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Background Flame Flicker -->
+  <div class="flame-bg"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#title-page">Home</a>
+    <a href="#presentation">Team Presentation</a>
+    <a href="#news">FTC News</a>
+    <a href="#tutorials">Tutorials</a>
+    <a href="#games">Games</a>
+    <a href="#qa">Q&amp;A</a>
+  </nav>
+
+  <!-- Full-Screen Title Page Section -->
+  <section id="title-page" class="section">
+    <!-- Title Text Container positioned near center-left -->
+    <div class="title-content">
+      <h1>PHOENIX</h1>
+      <p>Ro026 #19079</p>
+    </div>
+
+    <!-- Title Page Images with updated dimensions -->
+    <img class="bottom-left" src="leftCornerFlame.png" alt="Left Corner Flame" />
+    <img class="bottom-right" src="rightCornerFlame.png" alt="Right Corner Flame" />
+    <img class="center-right" src="logo.png" alt="Logo" />
+  </section>
+
+  <!-- Category Sections with Hidden Buttons -->
+  <section id="presentation" class="section category align-left">
+    <button class="hidden-button" onclick="location.href='teamPresentation.html'">
+      <span class="btn-title">Team Presentation</span>
+      <span class="btn-desc">Meet our team members</span>
+    </button>
+  </section>
+
+  <section id="news" class="section category align-right">
+    <button class="hidden-button" onclick="location.href='ftcNews.html'">
+      <span class="btn-title">FTC News</span>
+      <span class="btn-desc">See what's new in FTC</span>
+    </button>
+  </section>
+
+  <section id="tutorials" class="section category align-left">
+    <button class="hidden-button" onclick="location.href='tutorials.html'">
+      <span class="btn-title">Tutorials</span>
+      <span class="btn-desc">Learn the basics</span>
+    </button>
+  </section>
+
+  <section id="games" class="section category align-right">
+    <button class="hidden-button" onclick="location.href='games.html'">
+      <span class="btn-title">Games</span>
+      <span class="btn-desc">Relax and have some fun</span>
+    </button>
+  </section>
+
+  <section id="qa" class="section category align-left">
+    <button class="hidden-button" onclick="location.href='q&a.html'">
+      <span class="btn-title">Q&amp;A</span>
+      <span class="btn-desc">Ask questions about the site</span>
+    </button>
+  </section>
+
+  <!-- Fixed Footer -->
+  <footer>
+    <p>&copy; 2025 PHOENIX FTC Team. All rights reserved.</p>
+  </footer>
+
+  <!-- JavaScript (unchanged from before) -->
+  <script>
+    // Intersection Observer to update URL hash on section snap
+    document.addEventListener('DOMContentLoaded', function() {
+      const sections = document.querySelectorAll('.section');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            history.replaceState(null, null, '#' + entry.target.id);
+          }
+        });
+      }, { threshold: 0.7 });
+      sections.forEach(section => observer.observe(section));
+    });
+
+    // Flame Trail Effect
+    let lastFlameX = null;
+    let lastFlameY = null;
+    const MIN_DISTANCE = 20;
+
+    document.addEventListener('mousemove', function(e) {
+      if (lastFlameX === null) {
+        lastFlameX = e.pageX;
+        lastFlameY = e.pageY;
+        return;
+      }
+      const dx = e.pageX - lastFlameX;
+      const dy = e.pageY - lastFlameY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      if (distance > MIN_DISTANCE) {
+        lastFlameX = e.pageX;
+        lastFlameY = e.pageY;
+        createDispersedFlame(e.pageX, e.pageY);
+      }
+    });
+
+    function createDispersedFlame(x, y) {
+      const flame = document.createElement('img');
+      flame.src = 'flame.png'; // Replace with your flame image URL/path
+      flame.classList.add('cursor-flame');
+
+      // Random size between 10px and 20px
+      const size = 10 + Math.random() * 10;
+      flame.style.width = size + 'px';
+      flame.style.height = size + 'px';
+
+      // Random offset ±30px
+      const offsetX = (Math.random() - 0.5) * 60;
+      const offsetY = (Math.random() - 0.5) * 60;
+      flame.style.left = (x + offsetX) + 'px';
+      flame.style.top = (y + offsetY) + 'px';
+
+      // Random rotation
+      const rotation = Math.random() * 360;
+      flame.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
+
+      document.body.appendChild(flame);
+
+      // Removal timeout (matched with animation duration below)
+      setTimeout(() => flame.remove(), 500);
+    }
+  </script>
+</body>
+</html>
