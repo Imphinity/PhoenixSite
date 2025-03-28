@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PHOENIX FTC Team - Games</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Background Flame Flicker -->
+  <div class="flame-bg"></div>
+
+  <!-- Navigation (Transparent) -->
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#presentation">Team Presentation</a>
+    <a href="#news">FTC News</a>
+    <a href="#tutorials">Tutorials</a>
+    <a href="#games">Games</a>
+    <a href="#qa">Q&amp;A</a>
+  </nav>
+
+  <!-- Game Page Content -->
+  <div class="game-page">
+    <div class="game-box align-left">
+      <span>Flappy Bird</span>
+    </div>
+    <div class="game-box align-right">
+      <span>Tetris</span>
+    </div>
+    <div class="game-box align-left">
+      <span>Snake</span>
+    </div>
+  </div>
+
+  <!-- Fixed Footer (Transparent) -->
+  <footer>
+    <p>&copy; 2025 PHOENIX FTC Team. All rights reserved.</p>
+  </footer>
+
+  <!-- Flame Cursor Trail Script -->
+  <script>
+    // Only add a flame if the mouse moves more than MIN_DISTANCE pixels
+    let lastFlameX = null;
+    let lastFlameY = null;
+    const MIN_DISTANCE = 20;
+    
+    document.addEventListener('mousemove', function(e) {
+      if (lastFlameX === null) {
+        lastFlameX = e.pageX;
+        lastFlameY = e.pageY;
+        return;
+      }
+      const dx = e.pageX - lastFlameX;
+      const dy = e.pageY - lastFlameY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      if (distance > MIN_DISTANCE) {
+        lastFlameX = e.pageX;
+        lastFlameY = e.pageY;
+        createDispersedFlame(e.pageX, e.pageY);
+      }
+    });
+    
+    function createDispersedFlame(x, y) {
+      const flame = document.createElement('img');
+      flame.src = 'flame.png'; // Replace with your actual flame image URL/path
+      flame.classList.add('cursor-flame');
+      
+      // Random size between 10px and 20px
+      const size = 10 + Math.random() * 10;
+      flame.style.width = size + 'px';
+      flame.style.height = size + 'px';
+      
+      // Random offset ±30px to disperse slightly around the cursor path
+      const offsetX = (Math.random() - 0.5) * 60;
+      const offsetY = (Math.random() - 0.5) * 60;
+      flame.style.left = (x + offsetX) + 'px';
+      flame.style.top = (y + offsetY) + 'px';
+      
+      // Random rotation for variation
+      const rotation = Math.random() * 360;
+      flame.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
+      
+      document.body.appendChild(flame);
+      
+      // Remove flame after fade-out (0.8s)
+      setTimeout(() => flame.remove(), 800);
+    }
+  </script>
+</body>
+</html>
